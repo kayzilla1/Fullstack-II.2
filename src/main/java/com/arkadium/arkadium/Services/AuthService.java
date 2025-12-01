@@ -1,4 +1,4 @@
-package com.arkadium.arkadium.services;
+package com.arkadium.arkadium.Services;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

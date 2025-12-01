@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arkadium.arkadium.Controller.Request.RegisterRequest;
 import com.arkadium.arkadium.Model.User;
-import com.arkadium.arkadium.services.UserService;
+import com.arkadium.arkadium.Services.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
