@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +16,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.arkadium.arkadium.Controller.Request.RegisterRequest;
 import com.arkadium.arkadium.Model.User;
-import com.arkadium.arkadium.Services.UserService;
+import com.arkadium.arkadium.services.UserService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    
     @Autowired
     private UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
@@ -63,7 +68,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@org.springframework.web.bind.annotation.RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody RegisterRequest request){ 
+        User user = new User();
+        user.setNombres(request.nombres());
+        user.setApellidos(request.apellidos());
+        user.setCorreo(request.correo());
+        user.setPassword(passwordEncoder.encode(request.password()));
+        user.setRut(request.rut());
+        user.setRol("USER");
         User savedUser = userService.saveUser(user);
         return ResponseEntity.status(Response.SC_CREATED).body(savedUser);
     }
@@ -75,7 +87,6 @@ public class UserController {
             existingUser.setRut(userDetails.getRut());
             existingUser.setNombres(userDetails.getNombres());
             existingUser.setApellidos(userDetails.getApellidos());
-            existingUser.setFechaNacimiento(userDetails.getFechaNacimiento());
             existingUser.setCorreo(userDetails.getCorreo());
             User updatedUser = userService.saveUser(existingUser);
             return ResponseEntity.ok(updatedUser);

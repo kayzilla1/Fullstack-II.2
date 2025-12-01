@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arkadium.arkadium.Model.Product;
-import com.arkadium.arkadium.Services.ProductService;
+import com.arkadium.arkadium.services.ProductService;
 
 @CrossOrigin(origins = "*")
 @RestController

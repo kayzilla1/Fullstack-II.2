@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 
     @Query("select c from User c where lower(c.nombres) = lower(:nombres)")
     User FindByNombre(String nombres);
+
+    @Query("select c from User c where lower(c.correo) = lower(:correo)")
+    User findByCorreo(String correo);
 }

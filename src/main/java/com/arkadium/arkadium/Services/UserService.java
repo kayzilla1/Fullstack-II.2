@@ -1,4 +1,4 @@
-package com.arkadium.arkadium.Services;
+package com.arkadium.arkadium.services;
 
 import java.util.List;
 
