@@ -78,10 +78,11 @@ public class IGDBService {
             game.get("genres").forEach(g -> genres.add(g.get("name").asText()));
         }
 
-        String gameType = game.has("game_modes")
-                ? game.get("game_modes").get(0).get("name").asText()
-                : "Unknown";
-
+        List<String> gameType = new ArrayList<>();
+        if (game.has("game_modes")) {
+            game.get("game_modes").forEach(mode -> gameType.add(mode.get("name").asText()));
+        };
+        
         return new GameInfo(id, gameName, summary, genres, gameType);
     }
 }

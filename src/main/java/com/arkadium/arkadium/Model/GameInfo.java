@@ -7,9 +7,9 @@ public class GameInfo {
     private String name;
     private String summary;
     private List<String> genres;
-    private String gameType;
+    private List<String> gameType;
 
-    public GameInfo(long id, String name, String summary, List<String> genres, String gameType) {
+    public GameInfo(long id, String name, String summary, List<String> genres, List<String> gameType) {
         this.id = id;
         this.name = name;
         this.summary = summary;
@@ -21,5 +21,5 @@ public class GameInfo {
     public String getName() { return name; }
     public String getSummary() { return summary; }
     public List<String> getGenres() { return genres; }
-    public String getGameType() { return gameType; }
+    public List<String> getGameType() { return gameType; }
 }
