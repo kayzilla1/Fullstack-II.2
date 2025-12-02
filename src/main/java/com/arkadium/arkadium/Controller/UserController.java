@@ -6,23 +6,19 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.arkadium.arkadium.Controller.Request.RegisterRequest;
 import com.arkadium.arkadium.Model.User;
 import com.arkadium.arkadium.Services.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
+@Tag(name = "User Controller", description = "Operaciones CRUD para usuarios")
 public class UserController {
     
     @Autowired
@@ -30,6 +26,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Operation (summary = "Obtener todos los usuarios", description = "Devuelve una lista de todos los usuarios registrados")
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.findAllUsers();
@@ -39,6 +36,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @Operation (summary = "Obtener un usuario por RUT", description = "Devuelve un usuario basado en su RUT")
     @GetMapping("/rut/{rut}")
     public ResponseEntity<User> getUserByRut(@PathVariable String rut) {
         User user = userService.findUserByRut(rut);
@@ -48,6 +46,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @Operation (summary = "Obtener un usuario por nombres", description = "Devuelve un usuario basado en sus nombres")
     @GetMapping("/nombre/{nombres}")
     public ResponseEntity<User> getUserByNombre(@PathVariable String nombres) {
         User user = userService.findUserByNombre(nombres);
@@ -57,6 +56,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @Operation (summary = "Obtener un usuario por ID", description = "Devuelve un usuario basado en su ID")
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Integer id) {
         try {
@@ -67,6 +67,7 @@ public class UserController {
         }
     }
 
+    @Operation (summary = "Crear un nuevo usuario", description = "Crea un nuevo usuario con los datos proporcionados")
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody RegisterRequest request){ 
         User user = new User();
@@ -80,6 +81,7 @@ public class UserController {
         return ResponseEntity.status(Response.SC_CREATED).body(savedUser);
     }
 
+    @Operation (summary = "Actualizar un usuario", description = "Actualiza los datos de un usuario existente")
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User userDetails){
         try {
@@ -95,6 +97,7 @@ public class UserController {
         }
     }
 
+    @Operation (summary = "Cambiar rol de un usuario", description = "Cambia el rol de un usuario existente")
     @PutMapping("/{id}/rol")
     public ResponseEntity<User> cambiarRolUsuario(@PathVariable Integer id, @RequestBody String nuevoRol){
         try {
@@ -107,6 +110,7 @@ public class UserController {
         }
     }
 
+    @Operation (summary = "Eliminar un usuario", description = "Elimina un usuario existente por su ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id){
         try {

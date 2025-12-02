@@ -1,5 +1,6 @@
 package com.arkadium.arkadium.Model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,9 +29,11 @@ public class Token {
     }
 
     @Id
+    @Schema(description = "Identificador único del token", example = "1")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
+    @Schema(description = "Valor del token")
     @Column(unique=true, nullable = false)
     public String token;
     

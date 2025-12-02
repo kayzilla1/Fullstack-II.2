@@ -27,7 +27,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-        private static final Set<String> ADMIN_EMAILS = Set.of("ge.acunam@duocuc.cl");
+        private static final Set<String> ADMIN_EMAILS = Set.of("ge.acunam@duocuc.cl", "ro.groom@duocuc.cl");
 
         public TokenResponse register(RegisterRequest request) {
              String assignedRole = ADMIN_EMAILS.contains(request.correo()) ? "ROLE_ADMIN" : "ROLE_USER";

@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,25 +28,33 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class User implements UserDetails {
+
     @Id
+    @Schema(description = "Identificador único del usuario", example = "1")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Schema(description = "RUT del usuario", example = "12345678-9")
     @Column(nullable = false)
     private String rut;
 
+    @Schema(description = "Nombres del usuario", example = "Juan")
     @Column(nullable = false)
     private String nombres;
 
+    @Schema(description = "Apellidos del usuario", example = "Pérez")
     @Column(nullable = false)
     private String apellidos;
 
+    @Schema(description = "Correo electrónico del usuario", example = "juan.perez@example.com")
     @Column(unique=true, nullable = false)
     private String correo;
 
+    @Schema(description = "Contraseña del usuario", example = "password123")
     @Column(nullable = false)
     private String password;
 
+    @Schema(description = "Rol del usuario", example = "ROLE_USER")
     @Column(nullable = false)
     private String rol;
 
