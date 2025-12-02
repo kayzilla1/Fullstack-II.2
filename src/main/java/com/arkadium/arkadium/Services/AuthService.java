@@ -1,5 +1,7 @@
 package com.arkadium.arkadium.Services;
 
+import java.util.Set;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,17 +27,32 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    //Registro de usuario con token JWT
-     public TokenResponse register(RegisterRequest request) {
-          var user = User.builder()
-               .correo(request.correo())
-               .password(passwordEncoder.encode(request.password()))
-               .nombres(request.nombres())
-               .apellidos(request.apellidos())
-               .rut(request.rut())
-               .rol("USER")
-               .build();
-            var savedUser = userRepository.save(user);
+        private static final Set<String> ADMIN_EMAILS = Set.of("ge.acunam@duocuc.cl");
+
+        public TokenResponse register(RegisterRequest request) {
+             String assignedRole = ADMIN_EMAILS.contains(request.correo()) ? "ROLE_ADMIN" : "ROLE_USER";
+
+             var existingUser = userRepository.findByCorreo(request.correo());
+             final User savedUser;
+             if (existingUser != null) {
+                 // Si el usuario ya existe, actualizamos su rol (y opcionalmente la contraseña si viene)
+                 existingUser.setRol(assignedRole);
+                 if (request.password() != null && !request.password().isEmpty()) {
+                     existingUser.setPassword(passwordEncoder.encode(request.password()));
+                 }
+                 // No sobrescribimos otros campos por si ya están establecidos
+                 savedUser = userRepository.save(existingUser);
+             } else {
+                var user = User.builder()
+                     .correo(request.correo())
+                     .password(passwordEncoder.encode(request.password()))
+                     .nombres(request.nombres())
+                     .apellidos(request.apellidos())
+                     .rut(request.rut())
+                     .rol(assignedRole)
+                     .build();
+                savedUser = userRepository.save(user);
+             }
             var jwtToken = jwtService.generateToken(savedUser);
             saveUserToken(savedUser, jwtToken);
             return new TokenResponse(jwtToken);
@@ -63,4 +80,6 @@ public class AuthService {
         saveUserToken(user, jwtToken);
         return new TokenResponse(jwtToken);
     }
+
+    
 }
