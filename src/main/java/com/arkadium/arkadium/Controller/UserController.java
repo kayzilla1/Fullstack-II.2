@@ -95,6 +95,18 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{id}/rol")
+    public ResponseEntity<User> cambiarRolUsuario(@PathVariable Integer id, @RequestBody String nuevoRol){
+        try {
+            User existingUser = userService.findUserById(id);
+            existingUser.setRol(nuevoRol);
+            User updatedUser = userService.saveUser(existingUser);
+            return ResponseEntity.ok(updatedUser);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id){
         try {
