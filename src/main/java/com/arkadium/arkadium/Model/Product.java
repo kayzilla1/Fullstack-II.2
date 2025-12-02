@@ -22,12 +22,12 @@ public class Product {
     private String nombre;
 
     @Column(nullable=false)
-    private String descripcion;
-
-    @Column(nullable=false)
     private int precio;
 
     @Column(nullable=false)
-    private int stock;
+    private String stock;
+
+    @Column(nullable=false)
+    private String url_imagen;
 
 }
