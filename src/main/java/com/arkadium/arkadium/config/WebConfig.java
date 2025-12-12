@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer{
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 // Cambiar según la ipv4 del servidor o localhost para desarrollo.
-                .allowedOrigins("http://192.168.77.1:5173", "http://localhost:5173", "http://10.199.7.111:5173")
+                .allowedOrigins("http://192.168.1.19:5173", "http://localhost:5173", "http://10.199.7.111:5173")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
     }

@@ -46,7 +46,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         // Cambiar según la ipv4 del servidor o localhost para desarrollo.
-        config.setAllowedOrigins(List.of("http://192.168.77.1:5173", "http://localhost:5173", "http://10.199.7.111:5173"));
+        config.setAllowedOrigins(List.of("http://192.168.1.19:5173", "http://localhost:5173", "http://10.199.7.111:5173"));
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
