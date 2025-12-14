@@ -44,9 +44,25 @@ public class ProductController {
     public Product createProduct(@RequestBody Product product) {
         return repo.save(product);
     }
-
+    @Operation(summary = "Eliminar un producto", description = "Elimina un producto existente dado su ID")
+    @ApiResponse(responseCode = "204", description = "Producto eliminado exitosamente")
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Integer id) {
         repo.deleteById(id);
+    }
+
+    @Operation(summary = "Actualizar un producto", description = "Actualiza nombre, precio, stock y URL de imagen de un producto existente")
+    @ApiResponse(responseCode = "200", description = "Producto actualizado exitosamente")
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Integer id, @RequestBody Product updatedProduct) {
+        return repo.findById(id)
+                .map(product -> {
+                    product.setNombre(updatedProduct.getNombre());
+                    product.setPrecio(updatedProduct.getPrecio());
+                    product.setStock(updatedProduct.getStock());
+                    product.setUrl_imagen(updatedProduct.getUrl_imagen());
+                    return repo.save(product);
+                })
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
 }

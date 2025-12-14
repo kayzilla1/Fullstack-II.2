@@ -36,26 +36,6 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @Operation (summary = "Obtener un usuario por RUT", description = "Devuelve un usuario basado en su RUT")
-    @GetMapping("/rut/{rut}")
-    public ResponseEntity<User> getUserByRut(@PathVariable String rut) {
-        User user = userService.findUserByRut(rut);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(user);
-    }
-
-    @Operation (summary = "Obtener un usuario por nombres", description = "Devuelve un usuario basado en sus nombres")
-    @GetMapping("/nombre/{nombres}")
-    public ResponseEntity<User> getUserByNombre(@PathVariable String nombres) {
-        User user = userService.findUserByNombre(nombres);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(user);
-    }
-
     @Operation (summary = "Obtener un usuario por ID", description = "Devuelve un usuario basado en su ID")
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Integer id) {
