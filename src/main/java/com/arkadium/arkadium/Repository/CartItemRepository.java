@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     boolean existsByCartIdAndProductId(Long cartId, Integer productId);
     void deleteByCartIdAndProductId(Long cartId, Integer productId);
+    void deleteByCartId(Long cartId);
 }

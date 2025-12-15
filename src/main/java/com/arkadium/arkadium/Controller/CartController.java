@@ -68,4 +68,12 @@ public class CartController {
         Cart cart = cartService.removeProduct(user, productId);
         return response(cart);
     }
+
+    @DeleteMapping
+    public Map<String, Object> clear(Authentication auth) {
+        User user = currentUser(auth);
+        Cart cart = cartService.clearCart(user);
+        return response(cart);
+    }
+
 }

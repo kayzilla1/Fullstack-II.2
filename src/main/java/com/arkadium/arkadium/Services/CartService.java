@@ -49,7 +49,15 @@ public class CartService {
         return getOrCreateCart(user);
     }
 
+    @Transactional
+    public Cart clearCart(User user) {
+        Cart cart = getOrCreateCart(user);
+        itemRepo.deleteByCartId(cart.getId());
+        return getOrCreateCart(user);
+    }
+
     public long total(Cart cart) {
         return cart.getItems().stream().mapToLong(i -> i.getProduct().getPrecio()).sum();
     }
+    
 }
