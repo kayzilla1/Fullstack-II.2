@@ -68,7 +68,9 @@ public class CartService {
             productRepo.save(p);
         }
         itemRepo.deleteByCartId(cart.getId());
-        return getOrCreateCart(user);
+        cart.getItems().clear();
+        cartRepo.save(cart);
+        return cart;
     }
 
     public long total(Cart cart) {
