@@ -31,7 +31,7 @@ public class Product {
 
     @Schema(description = "Stock disponible del producto", example = "100")
     @Column(nullable=false)
-    private String stock;
+    private int stock;
 
     @Schema(description = "URL de la imagen del producto", example = "http://example.com/imagen.jpg")
     @Column(nullable=false)

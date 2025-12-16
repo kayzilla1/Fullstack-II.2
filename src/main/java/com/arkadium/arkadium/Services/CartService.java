@@ -50,8 +50,23 @@ public class CartService {
     }
 
     @Transactional
-    public Cart clearCart(User user) {
+    public Cart checkout(User user) {
         Cart cart = getOrCreateCart(user);
+        // Validar stock
+        for (CartItem item : cart.getItems()) {
+            Product p = item.getProduct();
+            if (p.getStock() <= 0) {
+                throw new IllegalStateException(
+                    "Sin stock para el producto: " + p.getNombre()
+                );
+            }
+        }
+        // Descontar stock
+        for (CartItem item : cart.getItems()) {
+            Product p = item.getProduct();
+            p.setStock(p.getStock() - 1);
+            productRepo.save(p);
+        }
         itemRepo.deleteByCartId(cart.getId());
         return getOrCreateCart(user);
     }
