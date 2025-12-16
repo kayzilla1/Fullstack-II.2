@@ -63,10 +63,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String rol;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private Cart cart;
-
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Token> tokens;
